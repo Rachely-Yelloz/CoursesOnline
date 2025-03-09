@@ -1,0 +1,37 @@
+<h1>Our courses!!!!!!!!!</h1>
+@if (coursesList.length === 0 ) {
+<p>No courses available.</p>
+}
+@if (errorMessage) {
+<p class="error">{{errorMessage}}</p>
+}
+
+
+@if (coursesList.length > 0) {
+<ul>
+    @if (addMassege()) {
+    <p class="error">{{ addMassege() }}</p>
+    }
+    @for ( course of coursesList;track course.id) {
+    <li>
+        <strong>{{course.title}}</strong>
+        <p>{{course.description}}</p>
+        <small>teacher name: {{course.teacherName}}</small>
+        <br>
+        <button (click)="addToCourse(course.id)">join to the cours</button>
+        <br>
+        @if(idAddTocourse===courseIdChoosen){
+        <a>you added to the course!!</a>
+        <br>
+        }
+
+        <button (click)="leaveCourse(course.id)">leave course</button>
+        <br>
+        <button (click)="viewDetails(course.id)">view more details</button>
+        @if(courseIdChoosen===course.id){
+        <app-single-course [courseId]="course.id"></app-single-course> 
+         }
+    </li>
+    }
+</ul>
+}
