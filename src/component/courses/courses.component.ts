@@ -52,7 +52,7 @@ export class CoursesComponent
 
   }
   ngOnInit(): void {
-    if (typeof window !== 'undefined') {  // בדיקה אם אנחנו בצד הלקוח
+    if (typeof window !== 'undefined'&&sessionStorage) {  // בדיקה אם אנחנו בצד הלקוח
       this.role = sessionStorage.getItem('role') || '';  // אם role לא מוגדר, תוגדר מחרוזת ריקה
     }    this.loadCourses();
 
@@ -70,7 +70,11 @@ export class CoursesComponent
     this.coursesList = this.coursesList.filter(course => course.id !== id);
   }
   leaveCourse(id: any) {
-    this.coursesService.removeStudentFromCourse(Number(id),Number(sessionStorage.getItem('userId'))).subscribe({
+    let userId1=0;
+    if (typeof window !== 'undefined' && sessionStorage) {  // בדיקה אם אנחנו בצד הלקוח
+    userId1=Number(sessionStorage.getItem('userId'));
+    }
+    this.coursesService.removeStudentFromCourse(Number(id),userId1).subscribe({
       next: (response) => {
         this.idAddTocourse = id;
         this.addMassege.set('תלמיד הוסר בהצלחה לקורס!');
@@ -83,9 +87,12 @@ export class CoursesComponent
     console.log('leave course', id);
   }
   addToCourse(id: any) {
-    // debugger;
-    const userId = Number(sessionStorage.getItem('userId'));
-    this.coursesService.addStudentToCourse(id, userId).subscribe({
+    let userId1:number=0;
+    if (typeof window !== 'undefined' && sessionStorage) {  // בדיקה אם אנחנו בצד הלקוח
+      userId1 = Number(sessionStorage.getItem('userId'));
+
+    }
+    this.coursesService.addStudentToCourse(id, userId1).subscribe({
       next: (response) => {
         this.idAddTocourse = id;
         this.addMassege.set('תלמיד נוסף בהצלחה לקורס!');

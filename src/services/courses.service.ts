@@ -275,7 +275,10 @@ export class CoursesService {
   private usersService = inject(UsersService);
 
   private getToken(): string | null {
-    return sessionStorage.getItem('tokenUser');
+    if (typeof window !== 'undefined' && sessionStorage) {  // בדיקה אם אנחנו בצד הלקוח
+
+    return sessionStorage.getItem('tokenUser');}
+    return null;
   }
 
   private getHttpOptions(): { headers: HttpHeaders } {

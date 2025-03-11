@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit {
         const res = await firstValueFrom(
           this.authService.loginUser(userData).pipe(
             tap(response => {
-              if (response?.token && isPlatformBrowser(this.platformId)) {
+              if (response?.token && isPlatformBrowser(this.platformId)&&sessionStorage) {
                 sessionStorage.setItem('tokenUser', response.token);
                 sessionStorage.setItem('userId', response.userId);
                 sessionStorage.setItem('role', response.role);

@@ -59,7 +59,10 @@ export class UsersService {
   private http = inject(HttpClient);
 
   private getToken(): string | null {
-    return sessionStorage.getItem('tokenUser');
+    if (typeof window !== 'undefined' && sessionStorage) {  // בדיקה אם אנחנו בצד הלקוח
+
+    return sessionStorage.getItem('tokenUser');}
+    return null;
   }
 
   registerUser(userData: { name: string; email: string; password: string; role: string }): Observable<any> {
