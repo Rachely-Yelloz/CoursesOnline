@@ -11,11 +11,12 @@ import { MatListModule } from '@angular/material/list';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent {
   
-  isAuth:any;
-  isTeacher:any;
-  ngOnInit(): void {
-    this.isAuth= sessionStorage.getItem('userId');
-    this.isTeacher=sessionStorage.getItem('role')==='teacher';
-}}
+//   isAuth:any;
+//   isTeacher:any;
+//   ngOnInit(): void {
+//     this.isAuth= sessionStorage.getItem('userId');
+//     this.isTeacher=sessionStorage.getItem('role')==='teacher';
+// }
+}

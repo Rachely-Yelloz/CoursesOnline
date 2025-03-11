@@ -6,12 +6,14 @@
   <button mat-button color="accent" [routerLink]="['/register']">
     הרשמה
   </button>
-  @if(isAuth){
+  <!-- @if(isAuth){ -->
   <button mat-button color="accent" [routerLink]="['/courses']">
     להצגת קורסים
-  </button>}
-  @if(isTeacher){
+  </button>
+<!-- } -->
+  <!-- @if(isTeacher){ -->
   <button mat-button color="accent" [routerLink]="['/teacher']">
-    לתפריט מורים</button>}
+    לתפריט מורים</button>
+  <!-- } -->
 </mat-card-actions>
 <h1>ברוכים הבאים למערכת הקורסים המדהימה שלנו!!!</h1>
