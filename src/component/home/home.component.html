@@ -1,13 +1,17 @@
-<button
-  [routerLink]="['/login']">
+<mat-card-actions>
+
+  <button mat-button color="accent" [routerLink]="['/login']">
     כניסה
-</button>
-<button 
- [routerLink]="['/register']">
+  </button>
+  <button mat-button color="accent" [routerLink]="['/register']">
     הרשמה
-</button>
-<button 
-[routerLink]="['/courses']">
+  </button>
+  @if(isAuth){
+  <button mat-button color="accent" [routerLink]="['/courses']">
     להצגת קורסים
-</button>
-<!-- <router-outlet></router-outlet> -->
+  </button>}
+  @if(isTeacher){
+  <button mat-button color="accent" [routerLink]="['/teacher']">
+    לתפריט מורים</button>}
+</mat-card-actions>
+<h1>ברוכים הבאים למערכת הקורסים המדהימה שלנו!!!</h1>

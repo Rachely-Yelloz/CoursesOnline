@@ -1,37 +1,51 @@
-<h1>Our courses!!!!!!!!!</h1>
-@if (coursesList.length === 0 ) {
-<p>No courses available.</p>
-}
-@if (errorMessage) {
-<p class="error">{{errorMessage}}</p>
-}
 
+ <h1>hi dear student  its Our Courses!</h1>
 
-@if (coursesList.length > 0) {
-<ul>
-    @if (addMassege()) {
-    <p class="error">{{ addMassege() }}</p>
-    }
-    @for ( course of coursesList;track course.id) {
-    <li>
-        <strong>{{course.title}}</strong>
-        <p>{{course.description}}</p>
-        <small>teacher name: {{course.teacherName}}</small>
-        <br>
-        <button (click)="addToCourse(course.id)">join to the cours</button>
-        <br>
-        @if(idAddTocourse===courseIdChoosen){
-        <a>you added to the course!!</a>
-        <br>
-        }
+ @if (coursesList.length === 0) {
+   <p>No courses available.</p>
+ }
+ 
+ @if (errorMessage) {
+   <p class="error">{{ errorMessage }}</p>
+ }
+ 
+ @if (coursesList.length > 0) {
+   @if (addMassege()) {
+     <p class="error">{{ addMassege() }}</p>
+   }
+ 
+   <mat-list>
+     @for (course of coursesList; track course.id) {
+       <mat-card>
+         <mat-card-header>
+           <mat-card-title>{{ course.title }}</mat-card-title>
+           <mat-card-subtitle>Teacher: {{ course.teacherName }}</mat-card-subtitle>
+         </mat-card-header>
+ 
+         <mat-card-content>
+           <p>{{ course.description }}</p>
+         </mat-card-content>
+ 
+         <mat-card-actions>
+           <button mat-button color="primary" (click)="addToCourse(course.id)">Join Course</button>
+           <button mat-button color="warn" (click)="leaveCourse(course.id)">Leave Course</button>
+           <button mat-button (click)="viewDetails(course.id)">View More Details</button>
 
-        <button (click)="leaveCourse(course.id)">leave course</button>
-        <br>
-        <button (click)="viewDetails(course.id)">view more details</button>
-        @if(courseIdChoosen===course.id){
-        <app-single-course [courseId]="course.id"></app-single-course> 
+   
+ 
+ 
+         </mat-card-actions>
+ 
+         @if (idAddTocourse === courseIdChoosen) {
+           <p class="success">You added to the course!!</p>
          }
-    </li>
-    }
-</ul>
-}
+ 
+         @if (courseIdChoosen === course.id) {
+           <app-single-course [courseId]="course.id"></app-single-course>
+         }
+       </mat-card>
+     }
+   </mat-list>
+ }
+  
+  

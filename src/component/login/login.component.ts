@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { response } from 'express';
 import { firstValueFrom, tap, catchError, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   errorMessage = signal<string>('');
 
 
-  constructor(private fb: FormBuilder, private authService: UsersService) {
+  constructor(private fb: FormBuilder, private authService: UsersService,private router:Router) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -49,6 +49,8 @@ export class LoginComponent implements OnInit {
                 sessionStorage.setItem('userId', res.userId);
                 sessionStorage.setItem('role', res.role);
                 this.errorMessage.set(''); // איפוס ההודעה במקרה של הצלחה
+                this.router.navigate(['/home']);
+
               }
             }),
             catchError(error => {

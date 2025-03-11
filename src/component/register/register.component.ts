@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { firstValueFrom, tap, catchError, of } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Route, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   userForm: FormGroup;
   errorMessage = signal<string>(''); // הודעת שגיאה בודדת
 
-  constructor(private fb: FormBuilder, private authService: UsersService) {
+  constructor(private fb: FormBuilder, private authService: UsersService,private router:Router) {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -48,6 +48,7 @@ export class RegisterComponent implements OnInit {
                 sessionStorage.setItem('userId', response.userId);
                 sessionStorage.setItem('role', response.role);
                 this.errorMessage.set(''); // איפוס ההודעה במקרה של הצלחה
+                this.router.navigate(['/home']);
               }
             }),
             catchError(error => {

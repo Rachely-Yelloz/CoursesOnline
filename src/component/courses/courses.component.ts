@@ -1,31 +1,85 @@
-import { Component, OnInit, signal } from '@angular/core';
 import { CoursesService } from '../../services/courses.service';
-import { Router, RouterModule } from '@angular/router';
-import { SingleCourseComponent } from '../single-course/single-course.component';
+import { Component, OnInit, signal } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatList, MatListModule } from '@angular/material/list';
+import { SingleCourseComponent } from "../single-course/single-course.component";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [SingleCourseComponent, RouterModule, CommonModule],
+
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatListModule,
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule, // כאן
+    CommonModule,
+    SingleCourseComponent
+  ],
+
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.css'
 })
 export class CoursesComponent
   implements OnInit {
 
+
   coursesList: any[] = [];
   errorMessage: string = '';
   idAddTocourse: any = null;
   addMassege = signal<string>('');
   courseIdChoosen: any;
-  courseDetailsToShow:any;
-  constructor(private router: Router, private coursesService: CoursesService) { }
+  courseDetailsToShow: any;
+  isEditing: boolean = false;
+  idEditing: any;
+
+  role: any = '';
+
+
+  constructor(private router: Router, private coursesService: CoursesService) {
+
+  }
   ngOnInit(): void {
+     this.role = sessionStorage.getItem('role'); // קביעת תפקיד המשתמש
     this.loadCourses();
+
+  }
+
+
+
+  onSubmit() {
+    console.log("editt");
+  }
+
+  deleteCourse(id: any) {
+    this.coursesService.deleteCourse(id);
+    this.addMassege.set('course deleted secussfuly');
+    this.coursesList = this.coursesList.filter(course => course.id !== id);
   }
   leaveCourse(id: any) {
-    console.log('leave course',id);
+    this.coursesService.removeStudentFromCourse(Number(id),Number(sessionStorage.getItem('userId'))).subscribe({
+      next: (response) => {
+        this.idAddTocourse = id;
+        this.addMassege.set('תלמיד הוסר בהצלחה לקורס!');
+      },
+      error: (error) => {
+        this.addMassege.set('הסרת תלמיד מהקורס נכשלה!');
+      }
+    });
+
+    console.log('leave course', id);
   }
   addToCourse(id: any) {
     // debugger;
@@ -44,11 +98,9 @@ export class CoursesComponent
   viewDetails(id: string) {
     this.courseIdChoosen = id;
     console.log(this.courseIdChoosen);
-    
-   // this.router.navigate(['/course', id]);
-
   }
   loadCourses(): void {
+
     this.coursesService.getCoursesWithTeachers().subscribe({
       next: (data) => {
         this.coursesList = data;
@@ -65,3 +117,4 @@ export class CoursesComponent
 
 
 }
+

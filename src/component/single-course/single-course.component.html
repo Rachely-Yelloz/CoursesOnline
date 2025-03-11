@@ -1,8 +1,22 @@
-<h2>lessons</h2>
-@for (lesson of courselessons; track lesson.id)
-{
-    
-<h3>title: {{ lesson.title }}</h3>
-<p>content: {{ lesson.content }}</p>
-<!-- <p>Course ID: {{ lesson.courseId }}</p> -->
+<h2>Lessons</h2>
+
+
+@if(messageToPrintLesson){
+<a>{{messageToPrintLesson}}</a>
 }
+
+
+<mat-accordion>
+  @for (lesson of courselessons; track lesson.id) {
+  <mat-expansion-panel>
+
+    <mat-expansion-panel-header>
+
+      <mat-panel-title>{{ lesson.title }}</mat-panel-title>
+
+    </mat-expansion-panel-header>
+
+    <p>{{ lesson.content }}</p>
+  </mat-expansion-panel>
+  }
+</mat-accordion>

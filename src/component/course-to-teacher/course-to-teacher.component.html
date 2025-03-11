@@ -1,0 +1,65 @@
+@if(messageToPrintLesson){
+<a>{{messageToPrintLesson}}</a>
+}
+<button mat-raised-button color="primary" (click)="addLesson()">Add Lesson</button>
+@if(isAddLesson){
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <input matInput [(ngModel)]="lessonToAdd.title" placeholder="title" />
+        </mat-card-title>
+
+        <mat-card-content>
+            <textarea matInput [(ngModel)]="lessonToAdd.content" placeholder="content"></textarea>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-button (click)="saveLesson()">save lesson</button>
+        </mat-card-actions>
+    </mat-card-header>
+
+</mat-card>
+}
+<mat-accordion>
+    @for (lesson of courselessons; track lesson.id) {
+    @if(lesson.id!=idEditing){
+
+    <mat-expansion-panel>
+
+        <mat-expansion-panel-header>
+
+            <p>{{ lesson.title }}</p>
+
+        </mat-expansion-panel-header>
+
+        <p>{{ lesson.content }}</p>
+
+
+        <mat-card-actions>
+            <button mat-button color="accent" (click)="updateLesson(lesson.id,lesson.title,lesson.content)">Update
+                Lesson</button>
+            <button mat-button color="warn" (click)="deleteLesson(lesson.id)">Delete Lesson</button>
+        </mat-card-actions>
+
+    </mat-expansion-panel>
+    }
+    @else {
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <input matInput [(ngModel)]="lessonToAdd.title" placeholder="title" />
+            </mat-card-title>
+
+            <mat-card-content>
+                <textarea matInput [(ngModel)]="lessonToAdd.content" placeholder="content"></textarea>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-button (click)="sendUpdate(lesson.id)">save lesson</button>
+            </mat-card-actions>
+        </mat-card-header>
+
+    </mat-card>
+    }
+    }
+</mat-accordion>
