@@ -42,7 +42,7 @@ export class SingleCourseComponent implements OnInit {
   loadCourseDetails(id: string | null) {
     if (id) {
 
-      this.coursesService.getCourseLessonsById(id).subscribe({
+      this.coursesService.getCourseLessonsById(Number(id)).subscribe({
         next: (data) => {
           this.courselessons = data;
           console.log(data);
