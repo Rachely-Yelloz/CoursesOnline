@@ -3,7 +3,12 @@ import { CanActivateFn, Router } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state) => {
 
-  const isAuth = sessionStorage.getItem('userId');
+  let isAuth: any | null = null;
+  if (typeof window !== 'undefined' && sessionStorage) {  // בדיקה אם אנחנו בצד הלקוח
+    isAuth = sessionStorage.getItem('userId');
+
+  }
+
   if (isAuth) {
     return true;
   }

@@ -22,7 +22,7 @@ import { CoursesService } from '../../services/courses.service';
 })
 export class CourseToTeacherComponent implements OnInit{
    @Input() courseId: string | null = null;
-    role: string | null = sessionStorage.getItem('role');
+    role: any ='';
     courseDetails: any; // כאן תוכל להגדיר את סוג הנתונים שתקבל
     courselessons: any[] = []; // כאן תוכל להגדיר את סוג הנתונים שתקבל
     messageToPrintLesson: any;
@@ -39,6 +39,9 @@ export class CourseToTeacherComponent implements OnInit{
     ngOnInit(): void {
   
       this.loadCourseDetails(this.courseId);
+      if (typeof window !== 'undefined'&&sessionStorage) {  // בדיקה אם אנחנו בצד הלקוח
+        this.role = sessionStorage.getItem('role') || '';  // אם role לא מוגדר, תוגדר מחרוזת ריקה
+      }
     }
   deleteLesson(idLesson: any) {
     this.coursesService.deleteLesson(Number(this.courseId), idLesson).subscribe(
@@ -135,7 +138,7 @@ export class CourseToTeacherComponent implements OnInit{
   loadCourseDetails(id: string | null) {
     if (id) {
 
-      this.coursesService.getCourseLessonsById(id).subscribe({
+      this.coursesService.getCourseLessonsById(Number(id)).subscribe({
         next: (data) => {
           this.courselessons = data;
           console.log(data);

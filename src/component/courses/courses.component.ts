@@ -52,8 +52,9 @@ export class CoursesComponent
 
   }
   ngOnInit(): void {
-     this.role = sessionStorage.getItem('role'); // קביעת תפקיד המשתמש
-    this.loadCourses();
+    if (typeof window !== 'undefined') {  // בדיקה אם אנחנו בצד הלקוח
+      this.role = sessionStorage.getItem('role') || '';  // אם role לא מוגדר, תוגדר מחרוזת ריקה
+    }    this.loadCourses();
 
   }
 
