@@ -39,10 +39,6 @@
   @for (course of coursesList; track course.id) {
 
   <mat-card>
-
-
-
-
     @if(idEditing!=course.id){
     <mat-card-header>
       <mat-card-title>{{ course.title }}</mat-card-title>
@@ -82,13 +78,9 @@
 
       <button mat-button (click)="viewDetails(course.id)">View More Details</button>
 
-
-
-
     </mat-card-actions>
     @if (idChoosenToViewDetails === course.id) {
     <app-course-to-teacher [courseId]="course.id"></app-course-to-teacher>
-
     }
 
   </mat-card>

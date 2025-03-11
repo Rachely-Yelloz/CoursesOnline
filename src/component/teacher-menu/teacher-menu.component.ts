@@ -27,7 +27,7 @@ import { CourseToTeacherComponent } from "../course-to-teacher/course-to-teacher
     ReactiveFormsModule, // כאן
     CommonModule,
     CourseToTeacherComponent
-],
+  ],
   templateUrl: './teacher-menu.component.html',
   styleUrl: './teacher-menu.component.css'
 })
@@ -46,8 +46,8 @@ export class TeacherMenuComponent {
     teacherId: '', // תוכל להגדיר ערך ברירת מחדל כאן אם תרצה,
     id: ''
   };
-  addingCourse:boolean=false;
-  idChoosenToViewDetails:any;
+  addingCourse: boolean = false;
+  idChoosenToViewDetails: any;
   courseForAdding: Course = {
     title: '', // תוכל להגדיר ערך ברירת מחדל כאן אם תרצה
     description: '',
@@ -60,8 +60,8 @@ export class TeacherMenuComponent {
     this.loadCourses();
   }
   viewDetails(id: any) {
-    this.idChoosenToViewDetails=id;
-    }
+    this.idChoosenToViewDetails = id;
+  }
   deleteCourse(id: any) {
     this.coursesService.deleteCourse(id).subscribe({
       next: (response) => {
@@ -76,35 +76,35 @@ export class TeacherMenuComponent {
       }
     });
   }
-  openAddCourse(){
-    debugger;
-    this.addingCourse=true;
+  openAddCourse() {
+    // debugger;
+    this.addingCourse = true;
   }
-  addCourse(){
+  addCourse() {
     this.coursesService.createCourse
-    (this.courseForAdding.title,this.courseForAdding.description,this.courseForAdding.teacherId).subscribe({
-      next: (response) => {
-        // קורס נוצר בהצלחה
-        this.massageToPrint = response.message; // הודעת הצלחה
-        const newCourse = {
-          id: response.courseId,  // ID שהשרת מחזיר
-          title: this.courseForAdding.title,
-          description: this.courseForAdding.description,
-          teacherId: this.courseForAdding.teacherId
-        };
-  
-        // הוספת הקורס החדש למערך הקורסים
-        this.coursesList.push(newCourse);
-        this.addingCourse=false;
+      (this.courseForAdding.title, this.courseForAdding.description, this.courseForAdding.teacherId).subscribe({
+        next: (response) => {
+          // קורס נוצר בהצלחה
+          this.massageToPrint = response.message; // הודעת הצלחה
+          const newCourse = {
+            id: response.courseId,  // ID שהשרת מחזיר
+            title: this.courseForAdding.title,
+            description: this.courseForAdding.description,
+            teacherId: this.courseForAdding.teacherId
+          };
 
-      },
-      error: (err) => {
-        // במקרה של שגיאה, הצג הודעת שגיאה
-        this.massageToPrint = 'Failed to create course';
-        console.error('Error creating course:', err);
-      }
-    });
-  
+          // הוספת הקורס החדש למערך הקורסים
+          this.coursesList.push(newCourse);
+          this.addingCourse = false;
+
+        },
+        error: (err) => {
+          // במקרה של שגיאה, הצג הודעת שגיאה
+          this.massageToPrint = 'Failed to create course';
+          console.error('Error creating course:', err);
+        }
+      });
+
   }
   loadCourses(): void {
     this.coursesService.getCoursesWithTeachers().subscribe({
@@ -120,9 +120,9 @@ export class TeacherMenuComponent {
     });
   }
   updateCourse(course: any) {
-    this.newCourse.description=course.description;
-    this.newCourse.title=course.title;
-    this.newCourse.teacherName=course.teacherName;
+    this.newCourse.description = course.description;
+    this.newCourse.title = course.title;
+    this.newCourse.teacherName = course.teacherName;
     this.idEditing = course.id;
 
   }
@@ -149,6 +149,6 @@ export class TeacherMenuComponent {
       }
     });
   }
- 
-  
+
+
 }
