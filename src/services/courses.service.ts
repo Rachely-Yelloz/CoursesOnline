@@ -244,17 +244,17 @@
 
 //     return this.http.post<{ message: string; courseId: number }>(url, body, httpOptions);
 //   }
- 
+
 //   removeStudentFromCourse(courseId: number, userId: number): Observable<any> {
 //     const token = sessionStorage.getItem('token');
 //     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
+
 //     return this.http.request('DELETE', `${this.apiUrl}/${courseId}/unenroll`, {
 //       headers,
 //       body: { userId }, // ודאי שה-Backend תומך ב-body ב-DELETE
 //     });
 //   }
-  
+
 // }
 
 
@@ -271,13 +271,13 @@ import { Course } from '../models/Course';
 })
 export class CoursesService {
   private apiUrl = 'http://localhost:3000/api/courses';
-  private http = inject(HttpClient);
-  private usersService = inject(UsersService);
+  constructor(private http: HttpClient, private usersService: UsersService) { }
+
 
   private getToken(): string | null {
     if (typeof window !== 'undefined' && sessionStorage) {  // בדיקה אם אנחנו בצד הלקוח
-
-    return sessionStorage.getItem('tokenUser');}
+      return sessionStorage.getItem('tokenUser');
+    }
     return null;
   }
 
